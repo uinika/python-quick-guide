@@ -342,32 +342,32 @@ print(list_numbers) # [1, 2, 3, 4, 5]
 
 ```py
 '''定义元组'''
-company = ("Google", "Facebook", "Microsoft")
+companies = ("Google", "Facebook", "Microsoft")
 
 '''访问元祖元素'''
-print("Top 1 is", company[0]) # Top 1 is Google
+print("Top 1 is", companies[0]) # Top 1 is Google
 
 '''访问倒数第1个元祖元素'''
-print("Countdown 1 is", company[-1]) # Countdown 1 is Microsoft
+print("Countdown 1 is", companies[-1]) # Countdown 1 is Microsoft
 
 '''截取元组前两个元素'''
-print("Top 2 is", company[0: 2]) # Top 2 is ('Google', 'Facebook')
+print("Top 2 is", companies[0: 2]) # Top 2 is ('Google', 'Facebook')
 
 '''拷贝元组'''
-print("All companies is", company[0:]) # print("All companies is", company[0:])
+print("All companies is", companies[0:]) # print("All companies are", companies[0:])
 
 '''获取元组元素的个数'''
-print("Number of companies is", len(company)) # Number of companies is 3
+print("Number of companies is", len(companies)) # Number of companies is 3
 
 '''修改元祖是非法的'''
-company[1] = "Yahoo" # TypeError: 'tuple' object does not support item assignment
+companies[1] = "Yahoo" # TypeError: 'tuple' object does not support item assignment
 
 '''删除元祖中的元素也是非法的'''
-del company[1] # TypeError: 'tuple' object doesn't support item deletion
+del companies[1] # TypeError: 'tuple' object doesn't support item deletion
 
 '''但是可以删除元组及其所属的变量，so，互联网泡沫来了...'''
-del company;
-print("Oops, Internet bubble burst!", company) # NameError: name 'company' is not defined
+del companies;
+print("Oops, Internet bubble burst!", companies) # NameError: name 'companies' is not defined
 ```
 
 元组都可以使用`+`和`*`进行运算，也可以组合或者复制，然后获得一个新的元组。
@@ -444,7 +444,201 @@ else:
   block3
 ```
 
+下面的代码是一个条件判断语句的例子，当`if`和`elif`判断的结果都为`False`时，最终打印`else`子句的结果。
+
+```py
+if False:
+  print("Current condition is IF")
+elif False:
+  print("Current condition is ELIF")
+else:
+  print("Current condition is ELSE")
+
+'''
+Current condition is ELSE
+'''
+```
+
 > Python当中没有`switch/case`语句。
+
+## 循环
+
+### while循环
+
+Python中使用`while`循环时，需要特别注意与其它类C语言语法的不同，即语句后的**标识符`:`**与**代码块缩进**。
+
+```py
+index = 1
+
+while index <= 100:
+  print(index)  # 输出1~100的序数
+  index+=1
+```
+
+> 注意了，Python是没有`do/while`循环的。
+
+可以通过设置条件表达为`True`实现无限循环，请看下面的例子：
+
+```py
+while True:
+  print("Thit is an infinite loop")
+```
+
+如果`while`循环体当中只拥有一条语句，可以将其与`while`关键字书写在同一行，因此上面无限循环的示例也可以写成下面这样：
+
+```py
+while True: print("Thit is an infinite loop")
+```
+
+Python的`while`循环拥有一个与其它类C语言截然不同的用法，即使用`while/else`语句在条件判断为`False`时执行`else`语句块当中的内容。
+
+```py
+index = 1
+
+while index <= 100:
+  print(index)
+  index+=1
+else:
+  print("超过100啦！")
+```
+
+### for循环
+
+Python的`for`语句可以用来对**列表**、**元组**、**字典**、**字符串**进行遍历操作。
+
+```py
+cars = ['FORD', 'HONDA', 'BMW']
+
+for car in cars:
+  print("输出结果：", car)
+
+'''
+输出结果： FORD
+输出结果： HONDA
+输出结果： BMW
+'''
+
+companies = ("Google", "Facebook", "Microsoft")
+
+for company in companies:
+  print("输出结果：", company)
+
+'''
+输出结果： Google
+输出结果： Facebook
+输出结果： Microsoft
+'''
+
+dictionaries = { "total": 10000, "limit": 50 }
+
+for key, value in dictionaries.items(): # 字典的items()方法返回该字典的每个键值对
+  print("输出key值：", key)
+  print("输出value值：", value)
+
+'''
+输出key值： total
+输出value值： 10000
+输出key值： limit
+输出value值： 50
+'''
+
+text = "Chengdu"
+
+for character in text:
+  print("输出结果：", character)
+
+'''
+输出结果： C
+输出结果： h
+输出结果： e
+输出结果： n
+输出结果： g
+输出结果： d
+输出结果： u
+'''
+```
+
+`for`语句同样可以结合`else`一起使用，`for`循环完毕之后，就会执行`else`子句中的代码。
+
+```py
+string = "成都"
+
+for liter in string:
+  print(liter)
+else:
+  print("赵雷")
+
+'''
+成
+都
+赵雷
+'''
+```
+
+### break与continue
+
+在Python的循环语句当中，可以通过`break`强行跳出当前循环体。
+
+```py
+for number in [0, 1, 2, 3, 4, 5]:
+  if number == 5:
+    break
+  print(number)
+
+print("Game over!")
+
+'''
+0
+1
+2
+3
+4
+Game over!
+'''
+```
+
+也可以通过`continue`直接略过本次循环。
+
+```py
+for number in [0, 1, 2, 3, 4, 5]:
+  if number == 3:
+    print("Skip number 3!")
+    continue
+  print(number)
+
+'''
+0
+1
+2
+Skip number 3!
+4
+5
+'''
+```
+
+### pass
+
+`pass`被执行的时候，并不进行任何操作，只起到一个语法占位符的作用。
+
+```py
+def demo(arg): pass # 定义一个不进行任何操作的函数
+
+class Demo: pass    # 定义一个没有任何方法的类
+```
+
+可以通过定义一个只有`pass`语句的类，来实现类似C语言结构体的功能。
+
+```py
+class Engineer:
+    pass
+
+hank = Engineer()
+
+hank.name = "uinika"
+hank.age = "18"
+
+print(hank.name + " is just only " + hank.age) # uinika is just only 18
+```
 
 ## 函数
 
@@ -514,35 +708,430 @@ parameter2： 2
 
 ```py
 # 在可变参数之前，可以放置任意数量的普通参数
-def function(alphabet, *parameters):
-  print('alphabet is：', alphabet)
-  print('parameters is：', parameters)
+def demo(parameter, *tuple):
+  print('Parameter is：', parameter)
+  print('Tuple is：', tuple)
 
-function('ABCDE', 1, 2, 3, '四', '五')
+demo('Hello Python!', 1, 2, 3, '四', '五')
 
 '''
-alphabet is： ABCDE
-parameters is： (1, 2, 3, '四', '五')
+Parameter is： Hello Python!
+Tuple is： (1, 2, 3, '四', '五')
+```
+
+也可以使用`**`作为前缀来声明参数，此时这些参数会包装为一个**字典**。
+
+```py
+def demo(parameter, **dictionary):
+  print("Parameter is", parameter)
+  print("Dictionary is", dictionary)
+
+demo("Hello World!", a=1, b=2, c=3)
+
+'''
+Parameter is Hello World!
+Dictionary is {'a': 1, 'b': 2, 'c': 3}
 '''
 ```
 
+如果`*`号**单独**出现在函数参数当中，那么后续的参数则必须使用**命名参数**显式传入。
 
+```PY
+def demo(parameter1, *, parameter2, parameter3):
+  print("Parameter1 is", parameter1)
+  print("Parameter2 is", parameter2);
+  print("Parameter3 is", parameter3);
+
+demo(1, parameter2 = 2, parameter3 = 3)
+
+'''
+Parameter1 is 1
+Parameter2 is 2
+Parameter3 is 3
+'''
+
+demo(A, B, parameter3 = C)
+
+'''
+Traceback (most recent call last):
+  File "test1.py", line 14, in <module>
+    demo(A, B, parameter3 = C)
+NameError: name 'A' is not defined
+'''
+```
+
+### lambda函数
+
+Python的lambda函数是只由一个Python表达式所组成的匿名的内联函数，其语法书写形式如下：
+
+```py
+lambda [parameters]: expression
+```
+
+lamdba函数的语法只能包含一条语句，例如：
+
+```py
+demo = lambda parameterA, parameterB: print(parameterA / parameterB)
+
+demo(1985, 8)
+
+'''
+248.125
+'''
+```
+
+### return语句
+
+`return`语句用于退出函数并返回函数的执行结果值，具体用法如下代码所示：
+
+```py
+def demo(parameter1, parameter2):
+  return parameter1 + parameter2
+
+print(demo(83, 2))
+```
+
+当Python中的`return`语句没有返回值时，则默认返回值为`None`。
+
+```py
+def demo():
+  return
+
+print(demo())
+
+'''
+None
+'''
+```
+
+> 不带参数值的`return`语句返回`None`。
+
+## 作用域
+
+Python当中仅`module`模块、`class`类、`def`或`lambda`函数会引入新作用域，`if/elif/else`、`try/except`、`for/while`等代码块并不会引入新作用域，即这些语句当中定义的变量在其外部也能访问。
+
+```py
+def function():
+  STRING = "This is a String!"
+
+print(text)
+
+'''
+Traceback (most recent call last):
+  File "test1.py", line 4, in <module>
+    print(text)
+NameError: name 'text' is not defined
+'''
+
+def function():
+  text = "This is a String!"
+  print(text)
+
+function()
+
+'''
+This is a String!
+'''
+```
+
+### `global`关键字
+
+使用`global`关键字声明的标识符将会引用至**全局变量**，在局部作用域中对其进行的修改操作都将会保留下来，就如同操作真正的全局变量一样。
+
+```py
+text = "全局变量"
+
+def function():
+  global text
+  print(text) # 输出："全局变量"
+  text = "局部变量"
+  print(text) # 输出："局部变量"
+
+function()
+
+print(text) # 输出："局部变量"
+```
+
+### `nonlocal`关键字
+
+使用`nonlocal`关键字声明的标识符将会引用至当前作用域外层的变量，在当前作用域对其进行的修改操作都将会保留，如同在真正的操作该作用域外层的变量一样。
+
+```py
+def outer():
+    text = "外部变量"
+
+    def inner():
+      nonlocal text
+      text = "内部变量"
+      print(text) # 输出："内部变量"
+    
+    inner()
+
+    print(text) # 输出："内部变量"
+
+outer()
+```
 
 ## 类
 
-## 异常
+Python使用`class`关键字创建一个**类**，然后直接调用类名即其初始化方法就可以创建这个类的**实例**。类进行实例化时，会自动调用该类的初始化方法`__init__(self)`（*作用类似于Java当中的构造函数*）。
 
-## 文件操作
+```py
+# Dog类
+class Dog:
+  # 类属性
+  age = ""
+  # 初始化方法
+  def __init__(self, age):
+    self.age = age;
+  # 类方法
+  def run(self):
+    print("I'm running!")
+
+pet = Dog("1岁") # 实例化Dog类，并显式向初始化函数__init__传递参数
+
+print(pet.age)
+
+pet.run()
+
+'''
+1岁
+I'm running!
+'''
+```
+
+> 注意：类方法（*包括初始化方法*）中的`self`参数是不能省略的，该参数指向类的实例，而非类本身。当然，根据个人编码习惯，也可以将`self`置换为其它语言中更为常用的`this`进行命名。
+
+### 继承
+
+Python做为面向对象的语言，自然是支持继承的。需要继承一个类，只需要在定义子类时传入父类的名称即可，同时为了保证子类和父类都能够正确的实例化，子类的初始化方法需要显示调用父类的初始化方法。
+
+```py
+# 定义Dog父类
+class Dog:
+  age = ""
+
+  def __init__(self, age):
+    self.age = age;
+
+  def run(self):
+    print(self.age)
+
+
+# 定义Puppy子类，并传入Dog父类
+class Puppy(Dog):
+  weight = ""
+
+  def __init__(self, weight):
+    Dog.__init__(self, "1岁") # 调用父类Dog的初始化方法
+    self.weight = weight;
+
+  def cute(self):
+    print(self.weight)
+
+pet = Puppy("10斤")
+
+pet.run() # 调用父类Dog的方法
+pet.cute() # 调用子类Puppy的方法
+
+'''
+1岁
+10斤
+'''
+```
+
+如同Java一样，Python也是可以实现多重继承的。多重继承时，为了保证继承树能够正确的进行实例化，需要在子类的初始化方法`__init__`内显式的调用父类们的初始化方法，并将子类的`self`属性传递过去。
+
+```py
+class A:
+  attribute = "";
+  def __init__(self):
+    print("A")
+
+class B:
+  def __init__(self):
+    print("B")
+
+class C(A, B):
+  def __init__(self):
+    A.__init__(self) # 在子类初始化方法内调用父类A的初始化方法
+    B.__init__(self) # 在子类初始化方法内调用父类B的初始化方法
+    print("C")
+
+demo = C()
+
+'''
+A 
+B 
+C 
+'''
+```
+
+### 私有属性和方法
+
+在类中声明属性和方法时添加两条下划线`__`，就可以将这个属性和方法声明为**私有**的。私有属性和方法只能在类中通过`self.__private`进行访问，而不能在类实例化后进行访问。
+
+```py
+class demo:
+  __attribute = "私有属性"
+
+  def __getAttribute(self):
+    print(self.__attribute + "私有方法")
+  
+test = demo()
+test.__attribute # AttributeError: 'demo' object has no attribute '__attribute'
+test.__getAttribute() # AttributeError: 'demo' object has no attribute '__getAttribute'  
+```
+
+### 方法重写override
+
+如果父类中定义的方法不能满足要求，那么可以考虑在子类中对父类的方法进行重写。
+
+```py
+class Parent:
+  def method(self):
+    print("输出：Parent")
+
+class Child(Parent):
+  def __init__(self):
+    Parent.__init__(self)
+  def method(self):
+    print("输出：Child")
+
+childInstance = Child()
+
+childInstance.method() # 输出：Child
+```
+
+当然，也可以通过`super()`函数显式调用被子类重写了的父类方法。对于上面的例子，可以使用如下语句调用父类的`method()`方法。
+
+```py
+super(Child, childInstance).method() # 输出：Parent
+```
+
+### 迭代器
+
+大家可能注意到许多容器对象能够使用`for`语句进行循环处理，就像下面代码这样：
+
+```py
+for element in [1, 2, 3]:
+    print(element)
+
+for element in (1, 2, 3):
+    print(element)
+
+for key in {'one':1, 'two':2}:
+    print(key)
+
+for char in "123":
+    print(char)
+
+for line in open("file.txt"):
+    print(line, end='')
+```
+
+这样的处理方法简单明了，实质上`for`语句调用容器对象上的`iter()`方法，该方法返回一个迭代器对象，这个迭代器对象当中定义了一个`__next__()`方法用于操作容器对象的元素，当没有更多可供迭代的元素时，该方法将会抛出一个`StopIteration`异常通知`for`语句终止循环操作。这里你可以通过`next()`内置函数去调用`__next__()`方法，参见下面的例子：
+
+```py
+string = 'abc'
+
+stringIterator = iter(string)
+print(stringIterator) # 输出<str_iterator object at 0x00000000023F8898>
+
+print(next(stringIterator)) # 输出a
+print(next(stringIterator)) # 输出b
+print(next(stringIterator)) # 输出c
+print(next(stringIterator))
+
+'''
+输出
+Traceback (most recent call last):
+  File "test.py", line 9, in <module>
+    print(next(stringIterator))
+StopIteration
+'''
+```
+
+定义一个`iter()`方法，该方法用`next()`方法返回一个对象。如果该类定义了`next()`，那么`iter()`就可以返回`self`。
+
+```py
+# 迭代器，用于反向循环一个序列
+class Reverse:
+  def __init__(self, data):
+    self.data = data # 初始化函数传入的待处理数据
+    self.index = len(data) # 待处理数据的长度
+
+  def __iter__(self):
+    return self # 返回对象实例本身
+
+  def __next__(self):
+    if self.index == 0:
+      raise StopIteration
+    self.index = self.index - 1 
+    return self.data[self.index] # 从字符串尾部开始逐一返回字母
+
+reverseUinika = Reverse('Hank')
+iter(reverseUinika) # 生成迭代器对象
+
+for char in reverseUinika: # 循环打印
+  print(char)
+
+'''
+k
+n
+a
+H
+'''
+```
+
+### 生成器
+
+生成器Generator是一个用于建立迭代器iterators的简单又强大的工具，其书写方式类似于函数，但是在返回数据的时候使用了`yield`语句。当生成器的`next()`每次被调用的时候，生成器会恢复到其离开的位置（*生成器能够记忆所有的数据和最后执行的语句位置*）。
+
+```py
+def reverse(data):
+  for index in range(len(data) - 1, -1, -1):
+    yield data[index] # 使用yield语句
+
+for char in reverse("Hank"):
+  print(char)
+
+'''
+k
+n
+a
+H
+'''
+```
+
+上述代码实现了之前迭代器示例相同的功能，生成器函数代码如此短小精悍的原因在于`iter()`和`next()`方法的创建以及`StopIteration`异常抛出都是自动进行的。另外生成器函数的局部变量和执行状态在每次调用都会被保存，这样比前面基于class的迭代器总是手动处理`self.index`和`self.data`更加便捷。
+
+一些简单的生成器可以使用特殊语法书（*与列表解析相似，不过使用圆括号代替了*）书写为一种更加简捷的表达式，即**生成器表达式**。这种表达式常用于在闭包函数内使用生成器的情况，语法上比完整的生成器定义更紧凑，并且比同等的列表理解更加容易记忆。
+
+```py
+# 求平方和
+sumOfSquares = sum(index * index for index in range(10)) 
+print(sumOfSquares) # 285
+
+# 求点积
+a = [10, 20, 30]
+b = [7, 5, 3]
+dotProduct = sum(x*y for x,y in zip(a, b))
+print(dotProduct) # 260
+```
+
+## 异常处理
+
+## 模块管理
+
+## 环境隔离
+
+## 输入输出
 
 ## 代码测试
 
-## 包管理
-
-## 环境隔离
+## Python之禅
 
 ## 实践：使用Djongo搭建Web服务
 
 ## 实践：在线图片相似度比较
-
-## Python之禅
-
