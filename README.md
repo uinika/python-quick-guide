@@ -1,37 +1,37 @@
 ---
-title: Python速成手册
+title: 言简意赅のPython3
 tags: Server
 categories: Web
 ---
 
-Python诞生于20世纪90年代初，由荷兰人Guido van Rossum开发完成，是一款非常简洁易读的解释型脚本语言；擅长于科学计算与图形处理，传统的计算机视觉库[OpenCV](https://opencv.org/)、三维可视化库[VTK](https://www.vtk.org/)、医学图像处理库[ITK](https://itk.org/)都提供了Python调用接口，Python也原生提供了[NumPy](http://www.numpy.org/)、[SciPy](https://www.scipy.org/)、[matplotlib](https://matplotlib.org/)等强大的科学计算扩展库。Web开发方面，Python也提供有[Django](https://www.djangoproject.com/)、[Tornado](http://www.tornadoweb.org/en/stable/)两款常用的Web开发框架。总而言之，得益于强大的开源社区支持，Python已经成为一门功能丰富的胶水语言。
+Python 诞生于 20 世纪 90 年代初，由荷兰人 Guido van Rossum 开发完成，是一款非常简洁易读的解释型脚本语言；擅长于科学计算与图形处理，传统的计算机视觉库[OpenCV](https://opencv.org/)、三维可视化库[VTK](https://www.vtk.org/)、医学图像处理库[ITK](https://itk.org/)都提供了 Python 调用接口，Python 也原生提供了[NumPy](http://www.numpy.org/)、[SciPy](https://www.scipy.org/)、[matplotlib](https://matplotlib.org/)等强大的科学计算扩展库。Web 开发方面，Python 也提供有[Django](https://www.Djangoproject.com/)、[Tornado](http://www.tornadoweb.org/en/stable/)两款常用的 Web 开发框架。总而言之，得益于强大的开源社区支持，Python 已经成为一门功能丰富的胶水语言。
 
 ![](python/logo.png)
 
-本文的示例代码基于目前最新的[Python 3.6.6](https://www.python.org/downloads/)版本，在简单介绍相关语法，以及[pip](https://pypi.org/project/pip/)、[virtualenv](https://virtualenv.pypa.io/en/stable/)等扩展库的使用之后，将会最终完成一个基于Django的在线图片相似度比较程序。本文涉及的代码和Markdown都已经上传至笔者的[Github](https://github.com/uinika/python-quick-guide)，需要的朋友可以直接进行克隆，如果有任何建议或发现缪误请提交issue。
+本文的示例代码基于目前最新的[Python 3.6.6](https://www.python.org/downloads/)版本，在简单介绍相关语法，以及[pip](https://pypi.org/project/pip/)、[virtualenv](https://virtualenv.pypa.io/en/stable/)等扩展库的使用之后，将会最终完成一个基于 Django 的在线图片相似度比较程序。本文涉及的代码和 Markdown 都已经上传至笔者的[Github](https://github.com/uinika/python-quick-guide)，需要的朋友可以直接进行克隆，如果有任何建议或发现缪误请提交 issue。
 
 <!-- more -->
 
 ## Hello World
 
-Python运行环境安装非常方便，Windows操作系统下直接前往[Python官网](https://python.org)下载安装包（*注意添加环境变量*），使用Debian软件包格式的Linux操作系统可以通过如下命令安装：
+Python 运行环境安装非常方便，Windows 操作系统下直接前往[Python 官网](https://python.org)下载安装包（_注意添加环境变量_），使用 Debian 软件包格式的 Linux 操作系统可以通过如下命令安装：
 
 ```bash
 ➜  sudo apt install python3
 ```
 
-笔者的Linux开发环境下，同时存在`Python 3.6.6`和`Python 2.7.15`两个版本，因此Z-shell命令行中运行`Hello World`程序时，需要显式输入`python3`，以指定操作系统打开`Python 3.6.6`运行环境。
+笔者的 Linux 开发环境下，同时存在`Python 3.6.6`和`Python 2.7.15`两个版本，因此在 Z-Shell 命令行中运行`Hello World`程序时，需要显式输入`python3`，以指定操作系统打开`Python 3.6.6`运行环境。
 
 ```bash
 ➜  / python3
-Python 3.6.6 (default, Apr  1 2018, 05:46:30) 
+Python 3.6.6 (default, Apr  1 2018, 05:46:30)
 [GCC 7.3.0] on linux
 Type "help", "copyright", "credits" or "license" for more information.
 >>> print("Hello World!")
 Hello World!
 ```
 
-> 代码执行完毕后，可以通过按下`CTRL + D`或者输入`exit()`退出Python运行环境。
+> 代码执行完毕后，可以通过按下`CTRL + D`或者输入`exit()`退出 Python 运行环境。
 
 当然，也可以单独将`print("Hello World!")`保存到一个独立的`test.py`代码文件，然后在命令行当中直接开始运行。
 
@@ -40,19 +40,19 @@ Hello World!
 Hello World!
 ```
 
-默认情况下，Python源代码是以`UTF-8`格式进行编码的，但可以通过向源文件头部添加如下声明来指定编码格式。
+默认情况下，Python 源代码是以`UTF-8`格式进行编码的，但可以通过向源文件头部添加如下声明来指定编码格式。
 
 ```py
 # -*- coding: utf-8 -*-
 ```
 
-可以在`.py`脚本文件的头部手动添加Python解释器的路径，从而在Linux系统可以方便的通过`./test1.py`执行该脚本，避免`python3 test1.py`写法的繁琐。
+可以在`.py`脚本文件的头部手动添加 Python 解释器的路径，从而在 Linux 系统可以方便的通过`./test1.py`执行该脚本，避免`python3 test1.py`写法的繁琐。
 
 ```
 #!/usr/bin/python3
 ```
 
-Python使用缩进来表示代码块，相同代码块的语句必须包含相同的缩进空格数。
+Python 使用缩进来表示代码块，相同代码块的语句必须包含相同的缩进空格数。
 
 ```py
 # -*- coding: utf-8 -*-
@@ -71,7 +71,7 @@ print(number)
 
 ## 变量
 
-Python是弱类型语言，因此声明变量时不需要指定数据类型，现在修改上一步的例子，声明一个`infomation`变量然后输出：
+Python 是弱类型语言，因此声明变量时不需要指定数据类型，现在修改上一步的例子，声明一个`infomation`变量然后输出：
 
 ```py
 infomation = "Hello World!"
@@ -81,15 +81,15 @@ print(infomation)
 执行结果如下：
 
 ```bash
-➜  2-Variable git:(master) ✗ python3 test1.py
+➜  python3 test1.py
 Hello World!
 ```
 
-相对C、Go、Java等强类型语言，Python的语法结构更为松散，但是变量的命名依然需要遵循以下规则：
+相对 C、Go、Java 等强类型语言，Python 的语法结构更为松散，但是变量的命名依然需要遵循以下规则：
 
 1. 变量名只能包含字母、数字、下划线，但不能以数字开头，例如`infomation_1`是合法的变量声明，但是`1_infomation`则属于非法。
-2. 变量名不能包含空格，不过可以使用下划线来分隔单词，例如``print_something``是合法的，但是`print something`属于非法。
-3. 不能使用Python关键字、函数名称作为变量名，例如`lambda`、`yield`、`raise`、`def`、`nonlocal`、`elif`、`assert`、`except`、`pass`、`with`。
+2. 变量名不能包含空格，不过可以使用下划线来分隔单词，例如`print_something`是合法的，但是`print something`属于非法。
+3. 不能使用 Python 关键字、函数名称作为变量名，例如`lambda`、`yield`、`raise`、`def`、`nonlocal`、`elif`、`assert`、`except`、`pass`、`with`。
 4. 建议使用小写字母作为变量名，并且谨慎使用小写字母`l`和大写字母`O`，因为两者很容易被代码阅读者混淆为数字`1`和`0`。
 5. 变量命名尽量见文知意，避免过度的缩写，例如`person_name`明显比`person_n`更加易读。
 
@@ -106,22 +106,22 @@ print(infomation)
 执行后将会输出两次打印结果：
 
 ```bash
-➜  2-Variable git:(master) ✗ python3 test2.py
+➜  python3 test2.py
 Hello World!
 Hello Hank!
 ```
 
-**traceback**（*回溯,追踪*）是Python语法解析器提供给开发人员的代码错误提示信息，可以更加直观的定位错误发生的代码位置。
+**traceback**（_回溯,追踪_）是 Python 语法解析器提供给开发人员的代码错误提示信息，可以更加直观的定位错误发生的代码位置。
 
 ```bash
-➜  2-Variable git:(master) ✗ python test3.py
+➜  python test3.py
 Traceback (most recent call last):  File "test3.py", line 2, in <module>
     print(deom)NameError: name 'deom' is not defined
 ```
 
 ## 注释
 
-python当中可以使用`#`声明一个**单行注释**。
+python 当中可以使用`#`声明一个**单行注释**。
 
 ```py
 # Comment
@@ -150,24 +150,22 @@ print("使用3个双引号声明的多行注释；")
 
 ## 数据类型
 
-Python是弱类型语言，使用前不需要专门声明，赋值之后变量即被创建。Python一共拥有5种标准的数据类型：**数值**（*Number*）、**字符串**（*String*）、**列表**[*List*]、**元组**（*Tuple*）、**字典**{*Dictionary*}。
+Python 是弱类型语言，使用前不需要专门声明，赋值之后变量即被创建。Python 一共拥有 5 种标准的数据类型：**数值**（_Number_）、**字符串**（_String_）、**列表**（_List_）、**元组**（_Tuple_）、**字典**（_Dictionary_）。Python 这 5 种标准数据类型除了通过字面量方式声明之外，还可以通过构造函数`int()`、`float()`、`complex()`、`str()`、`list()`、`tuple()`、`dict()`进行声明。
 
-Python这5种标准数据类型除了通过字面量方式声明之外，还可以通过构造函数`int()`、`float()`、`complex()`、`str()`、`list()`、`tuple()`、`dict()`进行声明。
-
-Python当中除了这5种标准数据类型之外，还有二进制序列类型（`bytes`, `bytearray`, `memoryview`）、集合类型（`set`, `frozenset`）等衍生的数据类型，本文这里并不将其作为基本数据类型进行介绍，开发人员可以结合官方文档的[《internal-objects》](https://docs.python.org/3.6/library/stdtypes.html#internal-objects)章节按需进行查阅。
+Python 当中除了这五种标准数据类型之外，还存在**二进制序列类型**（`bytes`, `bytearray`, `memoryview`）、**集合类型**（`set`, `frozenset`）等衍生的数据类型，本文这里并不将其作为基本数据类型进行介绍，开发人员可以结合官方文档的[《Internal Objects》](https://docs.python.org/3.6/library/stdtypes.html#internal-objects)章节按需进行查阅。
 
 ### 数值 Number
 
-由于Python非常适合于科学计算用途，因此对于数值类型方面内容的讲解篇幅相对较大。Python的数值类型分为**整型**（*精度不限*）、**浮点类型**（*底层使用C语言的双精度浮点类型实现*）、**复数类型**（*包含实部和虚部*）三种，其中**布尔类型**是作为整型的子类型出现。
+由于 Python 非常适合于科学计算用途，因此对于数值类型方面内容的讲解篇幅相对较大。Python 的数值类型分为**整型**（_精度不限_）、**浮点类型**（_底层使用 C 语言的双精度浮点类型实现_）、**复数类型**（_包含实部和虚部_）三种，其中**布尔类型**是作为整型的子类型出现。
 
-当前硬件设备对Python浮点数精度的相关支持信息，可以通过如下代码进行查看。
+当前硬件设备对 Python 浮点数精度的相关支持信息，可以通过如下代码进行查看。
 
 ```py
 import sys
 print(sys.float_info)
 ```
 
-上述代码在笔者的64位Linux系统上执行的结果如下：
+上述代码在笔者的 64 位 Linux 系统上执行的结果如下：
 
 ```py
 sys.float_info(max=1.7976931348623157e+308, max_exp=1024, max_10_exp=308, min=2.2250738585072014e-308, min_exp=-1021, min_10_exp=-307, dig=15, mant_dig=53, epsilon=2.220446049250313e-16, radix=2, rounds=1)
@@ -175,73 +173,73 @@ sys.float_info(max=1.7976931348623157e+308, max_exp=1024, max_10_exp=308, min=2.
 
 全部数值类型都支持的运算符：
 
-| 操作 | 结果 | 示例 |
-|:------|:-------|:-----|
-| `x + y`  | `x`与`y`的和 | `3 + 2`，结果为`5`。 |
-| `x - y`  | `x`与`y`的差 | `5 - 1`，结果为`4`。 |
-| `x * y`  | `x`与`y`的乘积 | `3 * 9`，结果为`27`。 |
-| `x ** y` | `x`的`y`幂次方 | `2 ** 3`，结果为`8`。 |
-| `x / y`  | `x`和`y`的商 | `8 / 2`，结果为`4.0`。 |
-| `x // y` | `x`和`y`的商取整 | `4 // 3`，结果为`1`。 |
-| `x % y`  | `x`与`y`的余数 | `12 % 7`，结果为`5`。 |
-| `-x`     | 取`x`的负数 | `-3`。 |
-| `+x`     | 取`x`的正数，原值不会变化 | `+3`。 |
+| 操作     | 结果                      | 示例                   |
+| :------- | :------------------------ | :--------------------- |
+| `x + y`  | `x`与`y`的和              | `3 + 2`，结果为`5`。   |
+| `x - y`  | `x`与`y`的差              | `5 - 1`，结果为`4`。   |
+| `x * y`  | `x`与`y`的乘积            | `3 * 9`，结果为`27`。  |
+| `x ** y` | `x`的`y`幂次方            | `2 ** 3`，结果为`8`。  |
+| `x / y`  | `x`和`y`的商              | `8 / 2`，结果为`4.0`。 |
+| `x // y` | `x`和`y`的商取整          | `4 // 3`，结果为`1`。  |
+| `x % y`  | `x`与`y`的余数            | `12 % 7`，结果为`5`。  |
+| `-x`     | 取`x`的负数               | `-3`。                 |
+| `+x`     | 取`x`的正数，原值不会变化 | `+3`。                 |
 
 全部数值类型都支持的方法：
 
-| 操作 | 结果 | 示例 |
-|:------|:-------|:-----|
-| `abs(x)`          | 取`x`的绝对值 | `abs(-32.3)`，结果为`32.3`。 |
-| `int(x)`          | 取`x`的整型 | `int(3.84)`，结果为`3`。 |
-| `float(x)`        | 取`x`的浮点类型 | `float(5)`，结果为`5.0`。 |
-| `complex(re, im)` | 一个以`re`作为实部`im`（默认为`0`）作为虚部的实数 | `complex(2.02, 3.3)`，结果为`(2.02+3.3j)`。 |
-| `c.conjugate()`   | 复数`c`的共轭复数 | `(complex(2.02, 3.3)).conjugate()`，结果为`(2.02-3.3j)`。 |
-| `divmod(x, y)`    | 由`(x // y, x % y)`组成的值对 | `divmod(12, 7)`，结果为`(1, 5)`。 |
-| `pow(x, y)`       | `x`的`y`幂次方，等效于`x ** y` | `pow(2, 3)`，结果为`8`。 |
+| 操作              | 结果                                              | 示例                                                      |
+| :---------------- | :------------------------------------------------ | :-------------------------------------------------------- |
+| `abs(x)`          | 取`x`的绝对值                                     | `abs(-32.3)`，结果为`32.3`。                              |
+| `int(x)`          | 取`x`的整型                                       | `int(3.84)`，结果为`3`。                                  |
+| `float(x)`        | 取`x`的浮点类型                                   | `float(5)`，结果为`5.0`。                                 |
+| `complex(re, im)` | 一个以`re`作为实部`im`（默认为`0`）作为虚部的实数 | `complex(2.02, 3.3)`，结果为`(2.02+3.3j)`。               |
+| `c.conjugate()`   | 复数`c`的共轭复数                                 | `(complex(2.02, 3.3)).conjugate()`，结果为`(2.02-3.3j)`。 |
+| `divmod(x, y)`    | 由`(x // y, x % y)`组成的值对                     | `divmod(12, 7)`，结果为`(1, 5)`。                         |
+| `pow(x, y)`       | `x`的`y`幂次方，等效于`x ** y`                    | `pow(2, 3)`，结果为`8`。                                  |
 
 整型的位操作：
 
-| 操作 | 结果 | 示例 |
-|:------|:-------|:-----|
-| `x & y`  | 按位与 | `3 & 2`，结果为`2`。 |
-| `x ｜ y`  | 按位或 | `3 ｜ 2`，结果为`3`。 |
-| `x ^ y`  | 按位异或 | `3 ^ 2`，结果为`1`。 |
-| `x << n` | 左移位 | `3 << 2`，结果为`12`。 |
-| `x >> n` | 右移位 | `3 >> 2`，结果为`0`。 |
-| `~x`     | 按位取反 | `~3`，结果为`-4`。 |
+| 操作     | 结果     | 示例                   |
+| :------- | :------- | :--------------------- |
+| `x & y`  | 按位与   | `3 & 2`，结果为`2`。   |
+| `x ｜ y` | 按位或   | `3 ｜ 2`，结果为`3`。  |
+| `x ^ y`  | 按位异或 | `3 ^ 2`，结果为`1`。   |
+| `x << n` | 左移位   | `3 << 2`，结果为`12`。 |
+| `x >> n` | 右移位   | `3 >> 2`，结果为`0`。  |
+| `~x`     | 按位取反 | `~3`，结果为`-4`。     |
 
-Python的Boolean值由`False`和`True`两个静态对象组成，其它对象参与布尔运算时，通常被认为是`True`（*除非重写其类定义当中的`__bool__()`方法并返回`False`，或者重写`__len__()`并返回`0`*），下列对象在布尔运算中被认为是`False`。
+Python 的 Boolean 值由`False`和`True`两个静态对象组成，其它对象参与布尔运算时，通常被认为是`True`（_除非重写其类定义当中的`__bool__()`方法并返回`False`，或者重写`__len__()`并返回`0`_），下列对象在布尔运算中会被认为是`False`。
 
 1. 被定义为`False`的等效常量：`None`、`False`。
 2. 任意值为`0`的数值类型：`0`、`0.0`、`0j`、`Decimal(0)`、`Fraction(0, 1)`。
 3. 空的序列或者集合：`''`、`()`、`[]`、`{}`、`set()`、`range(0)`。
 
-> 包含布尔结果的Python内建函数总是返回`0`和`False`或者`1`和`True`。
+> 包含布尔结果的 Python 内建函数总是返回`0`和`False`或者`1`和`True`。
 
 特别需要注意的是：**布尔运算`or`和`and`总是返回其中一个操作数本身**，请参见下面的布尔运算符说明表：
 
-| 操作 | 结果 | 示例 |
-|:------|:-------|:-----|
-| `x or y`  | 如果`x`为假，那么返回`y`，否则返回`x`        | `2 or 3`，结果为`3`。 |
-| `x and y` | 如果`x`为假，那么返回`x`, 否则返回`y`        | `2 and 3`，结果为`2`。 |
+| 操作      | 结果                                         | 示例                    |
+| :-------- | :------------------------------------------- | :---------------------- |
+| `x or y`  | 如果`x`为假，那么返回`y`，否则返回`x`        | `2 or 3`，结果为`3`。   |
+| `x and y` | 如果`x`为假，那么返回`x`, 否则返回`y`        | `2 and 3`，结果为`2`。  |
 | `not x`   | 如果`x`为假, 那么返回`True`, 否则返回`False` | `not 0`，结果为`True`。 |
 
-Python拥有6个比较运算符，其各自的运算优先级相同，可以随意链式使用。例如：` x < y <= z `与`x < y and y <= z`等效。
+Python 拥有 6 个比较运算符，其各自的运算优先级相同，可以随意链式使用。例如：`x < y <= z`与`x < y and y <= z`等效。
 
-| 操作符 | 结果 | 示例 |
-|:------|:-------|:-----|
-| `x < y`      | 严格小于 | `3 < 1`，结果为`False`。 |
-| `x <= y`     | 小于或等于 | `4 <= 4`，结果为`True`。 |
-| `x > y`      | 严格大于 | `12 > 33`，结果为`False`。 |
-| `x >= y`     | 大于或等于 | `21 >= 19`，结果为`True`。 |
-| `x == y`     | 等于 | `["A", "B"] == ["A", "B"]`，结果为`True`。 |
-| `x != y`     | 不等于 | `21 != 21`，结果为`False`。 |
-| `x is y`     | 对象引用地址的相等性判断 | `["A", "B"] is ["A", "B"]`结果为`False`。 |
+| 操作符       | 结果                               | 示例                                         |
+| :----------- | :--------------------------------- | :------------------------------------------- |
+| `x < y`      | 严格小于                           | `3 < 1`，结果为`False`。                     |
+| `x <= y`     | 小于或等于                         | `4 <= 4`，结果为`True`。                     |
+| `x > y`      | 严格大于                           | `12 > 33`，结果为`False`。                   |
+| `x >= y`     | 大于或等于                         | `21 >= 19`，结果为`True`。                   |
+| `x == y`     | 等于                               | `["A", "B"] == ["A", "B"]`，结果为`True`。   |
+| `x != y`     | 不等于                             | `21 != 21`，结果为`False`。                  |
+| `x is y`     | 对象引用地址的相等性判断           | `["A", "B"] is ["A", "B"]`结果为`False`。    |
 | `x is not y` | 对象引用地址的相等性判断的结果取反 | `["A", "B"] is not ["A", "B"]`结果为`True`。 |
 
 ### 字符串 String
 
-Python中的字符串是一个不可变的Unicode字符序列，可以保存在`str`对象或者字符串字面量当中。其中，字符串字面量可以通过如下3种方式书写：
+Python 中的字符串是一个不可变的 Unicode 字符序列，可以保存在`str`对象或者字符串字面量当中。其中，字符串字面量可以通过如下 3 种方式书写：
 
 单引号：`'allows embedded "double" quotes'`。
 双引号：`"allows embedded 'single' quotes"`。
@@ -249,13 +247,13 @@ Python中的字符串是一个不可变的Unicode字符序列，可以保存在`
 
 > 三引号字符串可以书写到多行，并且所有的空格都将会完整的保存下来。
 
-Python字符串同样可以通过`class str(object=b'', encoding='utf-8', errors='strict')`构造器进行创建。
+Python 字符串同样可以通过`class str(object=b'', encoding='utf-8', errors='strict')`构造器进行创建。
 
 ```py
 str("hello python!") == "hello python!" # True
 ```
 
-Python字符串可以进行索引，字符串第1个字符的索引为`0`，子字符串可以使用分割符`:`来指定。
+Python 字符串可以进行索引，字符串第 1 个字符的索引为`0`，子字符串可以使用分割符`:`来指定。
 
 ```py
 hank = "uinika"
@@ -265,7 +263,7 @@ print(hank[0:4])  # 输出字符串 'uini'
 
 ### 列表 List
 
-列表List是一个可变的序列（*即可以对列表的每个数据项进行修改*），用于存储同类数据的集合，可以通过如下方式进行创建：
+列表 List 是一个可变的序列（_即可以对列表的每个数据项进行修改_），用于存储同类数据的集合，可以通过如下方式进行创建：
 
 1. 使用方括号`[]`表达一个空的列表，例如`[]`；
 2. 使用方括号`[]`并且使用逗号`,`分隔每项数据，例如：`[1, 2, 3]`；
@@ -332,7 +330,7 @@ print(list_numbers) # [1, 2, 3, 4, 5]
 
 ### 元组 Tuple
 
-元组（*[ˈtʌpəl]*）是不可修改的序列类型，即不能对其中的元素进行修改。
+元组（_[ˈtʌpəl]_）是不可修改的序列类型，即不能对其中的元素进行修改。
 
 1. 使用圆括号`()`表达一个空的元组，例如`()`；
 2. 向只拥有一个数据项的元组最后添加逗号，例如：`(1,)`
@@ -391,11 +389,11 @@ for index in (0,1,2,3,4,5): print(index);
 """
 ```
 
-> 上面介绍的列表List，也可以进行类似操作。
+> 上面介绍的列表 List，也可以进行类似操作。
 
 ### 字典 Dictionary
 
-Python官方文档当中，将**列表**（*List*）和**元组**（*Tuple*）归纳为**序列类型**（*Sequence Types*），而将**字典**（* dict*）类型归为**映射类型**（*Mapping Types*）。Python中的字典类型是使用花括号`{}`包裹并通过逗号`,`分隔的`key-value`键值对，例如：`{"name": "hank", "age": 33}`。当然，同样也可以通过`class dict(**kwarg)`、`class dict(mapping, **kwarg)`、`class dict(iterable, **kwarg)`构造函数进行创建。
+Python 官方文档当中，将**列表**（_List_）和**元组**（_Tuple_）归纳为**序列类型**（_Sequence Types_），而将**字典**（_ dict_）类型归为**映射类型**（_Mapping Types_）。Python 中的字典类型是使用花括号`{}`包裹并通过逗号`,`分隔的`key-value`键值对，例如：`{"name": "hank", "age": 33}`。当然，同样也可以通过`class dict(**kwarg)`、`class dict(mapping, **kwarg)`、`class dict(iterable, **kwarg)`构造函数进行创建。
 
 ```py
 '''定义字典'''
@@ -433,7 +431,7 @@ dictionary[(1, 2, 3)] # ('A', 'B', 'C')
 
 ## 条件判断
 
-Python的条件判断语句与其它类C语言相似，但是每个condition后面需要使用冒号`:`表示后面是满足条件后执行的语句块。需要注意的是，**Python语句块的划分是通过缩来完成的，相同缩进数量的语句构成一个语句块**。
+Python 的条件判断语句与其它类 C 语言相似，但是每个 condition 后面需要使用冒号`:`表示后面是满足条件后执行的语句块。需要注意的是，**Python 语句块的划分是通过缩来完成的，相同缩进数量的语句构成一个语句块**。
 
 ```py
 if condition1:
@@ -459,13 +457,13 @@ Current condition is ELSE
 '''
 ```
 
-> Python当中没有`switch/case`语句。
+> Python 当中没有`switch/case`语句。
 
 ## 循环
 
-### while循环
+### while 循环
 
-Python中使用`while`循环时，需要特别注意与其它类C语言语法的不同，即语句后的**标识符`:`**与**代码块缩进**。
+Python 中使用`while`循环时，需要特别注意与其它类 C 语言语法的不同，即语句后的**标识符`:`**与**代码块缩进**。
 
 ```py
 index = 1
@@ -475,7 +473,7 @@ while index <= 100:
   index+=1
 ```
 
-> 注意了，Python是没有`do/while`循环的。
+> 注意了，Python 是没有`do/while`循环的。
 
 可以通过设置条件表达为`True`实现无限循环，请看下面的例子：
 
@@ -490,7 +488,7 @@ while True:
 while True: print("Thit is an infinite loop")
 ```
 
-Python的`while`循环拥有一个与其它类C语言截然不同的用法，即使用`while/else`语句在条件判断为`False`时执行`else`语句块当中的内容。
+Python 的`while`循环拥有一个与其它类 C 语言截然不同的用法，即使用`while/else`语句在条件判断为`False`时执行`else`语句块当中的内容。
 
 ```py
 index = 1
@@ -502,9 +500,9 @@ else:
   print("超过100啦！")
 ```
 
-### for循环
+### for 循环
 
-Python的`for`语句可以用来对**列表**、**元组**、**字典**、**字符串**进行遍历操作。
+Python 的`for`语句可以用来对**列表**、**元组**、**字典**、**字符串**进行遍历操作。
 
 ```py
 cars = ['FORD', 'HONDA', 'BMW']
@@ -575,9 +573,9 @@ else:
 '''
 ```
 
-### break与continue
+### break 与 continue
 
-在Python的循环语句当中，可以通过`break`强行跳出当前循环体。
+在 Python 的循环语句当中，可以通过`break`强行跳出当前循环体。
 
 ```py
 for number in [0, 1, 2, 3, 4, 5]:
@@ -626,7 +624,7 @@ def demo(arg): pass # 定义一个不进行任何操作的函数
 class Demo: pass    # 定义一个没有任何方法的类
 ```
 
-可以通过定义一个只有`pass`语句的类，来实现类似C语言结构体的功能。
+可以通过定义一个只有`pass`语句的类，来实现类似 C 语言结构体的功能。
 
 ```py
 class Engineer:
@@ -642,7 +640,7 @@ print(hank.name + " is just only " + hank.age) # uinika is just only 18
 
 ## 函数
 
-Python使用关键字`def`来定义函数，使用方式和声明规则与其它类C语言相似。
+Python 使用关键字`def`来定义函数，使用方式和声明规则与其它类 C 语言相似。
 
 ```py
 '''定义函数'''
@@ -654,7 +652,7 @@ def demo(parameter):
 demo("function")
 ```
 
-同其它类C语言一样，Python中的变量也可以分为局部变量（*定义在函数内部*）和全局变量（*定义在函数外部*）。
+同其它类 C 语言一样，Python 中的变量也可以分为局部变量（_定义在函数内部_）和全局变量（_定义在函数外部_）。
 
 ```py
 '''定义函数'''
@@ -669,10 +667,10 @@ demo()
 
 ### 命名参数
 
-调用Python函数时，可以向其传递命名参数，指定该参数值由哪个函数参数进行接收，避免按照顺序接收所可能带来的潜在错误。
+调用 Python 函数时，可以向其传递命名参数，指定该参数值由哪个函数参数进行接收，避免按照顺序接收所可能带来的潜在错误。
 
 ```py
-def function(parameter): 
+def function(parameter):
   print("parameter", parameter)
 
 '''传递命名参数'''
@@ -681,13 +679,13 @@ function(parameter = 0) # parameter 0
 
 ### 默认参数
 
-定义Python函数的时候，对于缺省的参数可以赋予其一个默认值。
+定义 Python 函数的时候，对于缺省的参数可以赋予其一个默认值。
 
 ```py
 '''
 定义函数的时候声明了parameter2的默认参数
 '''
-def function(parameter1, parameter2 = 2): 
+def function(parameter1, parameter2 = 2):
   print("执行结果：")
   print("parameter1", parameter1)
   print("parameter2", parameter2)
@@ -760,15 +758,15 @@ NameError: name 'A' is not defined
 '''
 ```
 
-### lambda函数
+### lambda 函数
 
-Python的lambda函数是只由一个Python表达式所组成的匿名的内联函数，其语法书写形式如下：
+Python 的 lambda 函数是只由一个 Python 表达式所组成的匿名的内联函数，其语法书写形式如下：
 
 ```py
 lambda [parameters]: expression
 ```
 
-lamdba函数的语法只能包含一条语句，例如：
+lamdba 函数的语法只能包含一条语句，例如：
 
 ```py
 demo = lambda parameterA, parameterB: print(parameterA / parameterB)
@@ -780,7 +778,7 @@ demo(1985, 8)
 '''
 ```
 
-### return语句
+### return 语句
 
 `return`语句用于退出函数并返回函数的执行结果值，具体用法如下代码所示：
 
@@ -791,7 +789,7 @@ def demo(parameter1, parameter2):
 print(demo(83, 2))
 ```
 
-当Python中的`return`语句没有返回值时，则默认返回值为`None`。
+当 Python 中的`return`语句没有返回值时，则默认返回值为`None`。
 
 ```py
 def demo():
@@ -808,7 +806,7 @@ None
 
 ## 作用域
 
-Python当中仅`module`模块、`class`类、`def`或`lambda`函数会引入新作用域，`if/elif/else`、`try/except`、`for/while`等代码块并不会引入新作用域，即这些语句当中定义的变量在其外部也能访问。
+Python 当中仅`module`模块、`class`类、`def`或`lambda`函数会引入新作用域，`if/elif/else`、`try/except`、`for/while`等代码块并不会引入新作用域，即这些语句当中定义的变量在其外部也能访问。
 
 ```py
 def function():
@@ -864,7 +862,7 @@ def outer():
       nonlocal text
       text = "内部变量"
       print(text) # 输出："内部变量"
-    
+
     inner()
 
     print(text) # 输出："内部变量"
@@ -872,9 +870,9 @@ def outer():
 outer()
 ```
 
-## 类
+## 类与实例
 
-Python使用`class`关键字创建一个**类**，然后直接调用类名即其初始化方法就可以创建这个类的**实例**。类进行实例化时，会自动调用该类的初始化方法`__init__(self)`（*作用类似于Java当中的构造函数*）。
+Python 使用`class`关键字创建一个**类**，然后直接调用类名即其初始化方法就可以创建这个类的**实例**。类进行实例化时，会自动调用该类的初始化方法`__init__(self)`（_作用类似于 Java 当中的构造函数_）。
 
 ```py
 # Dog类
@@ -900,11 +898,11 @@ I'm running!
 '''
 ```
 
-> 注意：类方法（*包括初始化方法*）中的`self`参数是不能省略的，该参数指向类的实例，而非类本身。当然，根据个人编码习惯，也可以将`self`置换为其它语言中更为常用的`this`进行命名。
+> 注意：类方法（_包括初始化方法_）中的`self`参数是不能省略的，该参数指向类的实例，而非类本身。当然，根据个人编码习惯，也可以将`self`置换为其它语言中更为常用的`this`进行命名。
 
 ### 继承
 
-Python做为面向对象的语言，自然是支持继承的。需要继承一个类，只需要在定义子类时传入父类的名称即可，同时为了保证子类和父类都能够正确的实例化，子类的初始化方法需要显示调用父类的初始化方法。
+Python 做为面向对象的语言，自然是支持继承的。需要继承一个类，只需要在定义子类时传入父类的名称即可，同时为了保证子类和父类都能够正确的实例化，子类的初始化方法需要显示调用父类的初始化方法。
 
 ```py
 # 定义Dog父类
@@ -940,7 +938,7 @@ pet.cute() # 调用子类Puppy的方法
 '''
 ```
 
-如同Java一样，Python也是可以实现多重继承的。多重继承时，为了保证继承树能够正确的进行实例化，需要在子类的初始化方法`__init__`内显式的调用父类们的初始化方法，并将子类的`self`属性传递过去。
+如同 Java 一样，Python 也是可以实现多重继承的。多重继承时，为了保证继承树能够正确的进行实例化，需要在子类的初始化方法`__init__`内显式的调用父类们的初始化方法，并将子类的`self`属性传递过去。
 
 ```py
 class A:
@@ -961,9 +959,9 @@ class C(A, B):
 demo = C()
 
 '''
-A 
-B 
-C 
+A
+B
+C
 '''
 ```
 
@@ -977,13 +975,13 @@ class demo:
 
   def __getAttribute(self):
     print(self.__attribute + "私有方法")
-  
+
 test = demo()
 test.__attribute # AttributeError: 'demo' object has no attribute '__attribute'
-test.__getAttribute() # AttributeError: 'demo' object has no attribute '__getAttribute'  
+test.__getAttribute() # AttributeError: 'demo' object has no attribute '__getAttribute'
 ```
 
-### 方法重写override
+### 方法重写 override
 
 如果父类中定义的方法不能满足要求，那么可以考虑在子类中对父类的方法进行重写。
 
@@ -1067,7 +1065,7 @@ class Reverse:
   def __next__(self):
     if self.index == 0:
       raise StopIteration
-    self.index = self.index - 1 
+    self.index = self.index - 1
     return self.data[self.index] # 从字符串尾部开始逐一返回字母
 
 reverseUinika = Reverse('Hank')
@@ -1086,7 +1084,7 @@ H
 
 ### 生成器
 
-生成器Generator是一个用于建立迭代器iterators的简单又强大的工具，其书写方式类似于函数，但是在返回数据的时候使用了`yield`语句。当生成器的`next()`每次被调用的时候，生成器会恢复到其离开的位置（*生成器能够记忆所有的数据和最后执行的语句位置*）。
+生成器 Generator 是一个用于建立迭代器 iterators 的简单又强大的工具，其书写方式类似于函数，但是在返回数据的时候使用了`yield`语句。当生成器的`next()`每次被调用的时候，生成器会恢复到其离开的位置（_生成器能够记忆所有的数据和最后执行的语句位置_）。
 
 ```py
 def reverse(data):
@@ -1104,13 +1102,13 @@ H
 '''
 ```
 
-上述代码实现了之前迭代器示例相同的功能，生成器函数代码如此短小精悍的原因在于`iter()`和`next()`方法的创建以及`StopIteration`异常抛出都是自动进行的。另外生成器函数的局部变量和执行状态在每次调用都会被保存，这样比前面基于class的迭代器总是手动处理`self.index`和`self.data`更加便捷。
+上述代码实现了之前迭代器示例相同的功能，生成器函数代码如此短小精悍的原因在于`iter()`和`next()`方法的创建以及`StopIteration`异常抛出都是自动进行的。另外生成器函数的局部变量和执行状态在每次调用都会被保存，这样比前面基于 class 的迭代器总是手动处理`self.index`和`self.data`更加便捷。
 
-一些简单的生成器可以使用特殊语法书（*与列表解析相似，不过使用圆括号代替了*）书写为一种更加简捷的表达式，即**生成器表达式**。这种表达式常用于在闭包函数内使用生成器的情况，语法上比完整的生成器定义更紧凑，并且比同等的列表理解更加容易记忆。
+一些简单的生成器可以使用特殊语法书（_与列表解析相似，不过使用圆括号代替了_）书写为一种更加简捷的表达式，即**生成器表达式**。这种表达式常用于在闭包函数内使用生成器的情况，语法上比完整的生成器定义更紧凑，并且比同等的列表理解更加容易记忆。
 
 ```py
 # 求平方和
-sumOfSquares = sum(index * index for index in range(10)) 
+sumOfSquares = sum(index * index for index in range(10))
 print(sumOfSquares) # 285
 
 # 求点积
@@ -1122,7 +1120,7 @@ print(dotProduct) # 260
 
 ## 异常处理
 
-与其它类C语言一样，Python通过`try...except`语句块提供了健全的错误和异常处理机制。首先，`try`和`except`当中的子句被执行，此时如果没有异常出现，`except`子句会被跳过，同时`try`语句块正常执行完成。如果`try`的子句当中发生了异常，则会中断剩下子句的执行流程，并跳转去执行`except`关键字后声明异常类型所对应的语句，完成后继续执行该`try`语句块后续的内容。如果对应的异常类型没有找到，该异常会被传递到`try`语句块之外，如果语句块外依然没有进行相应的处理，那么程序的执行流程会被中断 ，并且向控制台打印出异常信息。
+与其它类 C 语言一样，Python 通过`try...except`语句块提供了健全的错误和异常处理机制。首先，`try`和`except`当中的子句被执行，此时如果没有异常出现，`except`子句会被跳过，同时`try`语句块正常执行完成。如果`try`的子句当中发生了异常，则会中断剩下子句的执行流程，并跳转去执行`except`关键字后声明异常类型所对应的语句，完成后继续执行该`try`语句块后续的内容。如果对应的异常类型没有找到，该异常会被传递到`try`语句块之外，如果语句块外依然没有进行相应的处理，那么程序的执行流程会被中断 ，并且向控制台打印出异常信息。
 
 ```py
 try:
@@ -1169,7 +1167,7 @@ ExceptionC
 '''
 ```
 
-> 如果将上面代码中`except`子句的处理顺序颠倒一下，那么打印结果会变为`ExceptionA ExceptionB ExceptionC`，这是因为异常类A、B、C产生的异常全部都会被异常类A捕捉然后中断执行。
+> 如果将上面代码中`except`子句的处理顺序颠倒一下，那么打印结果会变为`ExceptionA ExceptionB ExceptionC`，这是因为异常类 A、B、C 产生的异常全部都会被异常类 A 捕捉然后中断执行。
 
 值得注意的是，最后一条`except`子句可以省略掉异常名称，从而可以补捉到全部的异常类型，虽然同样可以执行打印错误信息和抛出异常的操作，不过要十分小心的使用，因为它可能会掩盖掉真实发生的异常信息。
 
@@ -1191,7 +1189,7 @@ Exception
 '''
 ```
 
-`try…except…`异常处理语句还拥有一个`else…`子句，用来在`try`子句没有捕捉到异常时执行一些必要的代码（*如果`try…except…`时发生了异常，则`else…`子句中的异常将不会得到执行*）。
+`try…except…`异常处理语句还拥有一个`else…`子句，用来在`try`子句没有捕捉到异常时执行一些必要的代码（_如果`try…except…`时发生了异常，则`else…`子句中的异常将不会得到执行_）。
 
 ```py
 try:
@@ -1215,7 +1213,7 @@ except Exception as exception:
 
 > 由于`Exception`类里定义了`__str__()`方法，所以可以通过直接打印异常对象来获取异常参数。
 
-Python的异常处理机制，不光能处理`try`子句当中发生的异常，还能够处理`try`中调用的函数内发生的异常。
+Python 的异常处理机制，不光能处理`try`子句当中发生的异常，还能够处理`try`中调用的函数内发生的异常。
 
 ```py
 def division():
@@ -1285,9 +1283,9 @@ class TransitionError(Error):
     self.message = message # 解释为什么这个转换不被允许的原因
 ```
 
-> **Python异常的命名通常会以`"Error"`结尾，建议自定义异常时保持这样的惯例**。
+> **Python 异常的命名通常会以`"Error"`结尾，建议自定义异常时保持这样的惯例**。
 
-`try`语句还拥有一个可以用来进行一些清除操作的`finally`子句，该子句无论不否发生异常都会被执行（*与else的最大不同点*），读者可以参考下面的例子：
+`try`语句还拥有一个可以用来进行一些清除操作的`finally`子句，该子句无论不否发生异常都会被执行（_与 else 的最大不同点_），读者可以参考下面的例子：
 
 ```py
 def divide(x, y):
@@ -1326,7 +1324,7 @@ TypeError: unsupported operand type(s) for /: 'str' and 'str'
 
 ## 模块管理
 
-Python通过`import`关键字来引入其它模块，并且需要将其放置到代码的顶部。Python当中`.py`文件的名称就是模块的名称，模块的名称可以通过全局变量`__name__`进行访问（*如果该模块是python命令行直接执行的模块，则`__name__`属性的打印结果为`"__main__"`*）。
+Python 通过`import`关键字来引入其它模块，并且需要将其放置到代码的顶部。Python 当中`.py`文件的名称就是模块的名称，模块的名称可以通过全局变量`__name__`进行访问（_如果该模块是 python 命令行直接执行的模块，则`__name__`属性的打印结果为`"__main__"`_）。
 
 ```py
 # myModule.py
@@ -1346,7 +1344,7 @@ myModule.test()
 这是myModule模块里的测试方法！
 ```
 
-每个模块都拥有自己的私有**符号表**（*Symbol Table，一种存储键值对的数据结构*），因为被引入的模块名称会被放置在引入模块的全局**全局符号表**当中，所以模块当中定义的函数能够以**全局符号表**的方式进行使用。因此，模块的作者可以放心的在模块中使用全局变量，而毋须担心与其它用户的变量发生冲突。另一方面，如要需要访问这些模块里定义的全局变量 ，那么可以通过`module_name.variable_name`的方式进行访问。
+每个模块都拥有自己的私有**符号表**（_Symbol Table，一种存储键值对的数据结构_），因为被引入的模块名称会被放置在引入模块的全局**全局符号表**当中，所以模块当中定义的函数能够以**全局符号表**的方式进行使用。因此，模块的作者可以放心的在模块中使用全局变量，而毋须担心与其它用户的变量发生冲突。另一方面，如要需要访问这些模块里定义的全局变量 ，那么可以通过`module_name.variable_name`的方式进行访问。
 
 如果觉得`module_name.variable_name`方式过于繁琐，那么可以通过`from module_name import iitem_name_in_module`语句指定从模块导入的内容，而无须总是在使用的时候添加模块的名称，请见下面的例子：
 
@@ -1393,7 +1391,7 @@ ImportError: cannot import name 'privateDemo'
 '''
 ```
 
-> 这种一忺导入全部模块内容的方式在Python官方文档中是不被鼓励的，因此在现实开发场景下需要酌情使用。
+> 这种一忺导入全部模块内容的方式在 Python 官方文档中是不被鼓励的，因此在现实开发场景下需要酌情使用。
 
 如果引入模块的名称与当前模块定义的变量或者函数有冲突，那么可以考虑通过`as`关键字使模块中的内容绑定到一个别名上。
 
@@ -1427,7 +1425,7 @@ This is another demo!
 '''
 ```
 
-出于性能方面的考量，一个模块只会在Python的每个解释器会话当中被引入一次，所以如果开发人员在解释器运行之后修改了模块的代码，则必须重新启动解释器。当然，如果你只有一个模块需要进行交互式的测试，则可以使用` importlib.reload()`方法暂时解决这个问题。
+出于性能方面的考量，一个模块只会在 Python 的每个解释器会话当中被引入一次，所以如果开发人员在解释器运行之后修改了模块的代码，则必须重新启动解释器。当然，如果你只有一个模块需要进行交互式的测试，则可以使用`importlib.reload()`方法暂时解决这个问题。
 
 ```py
 import module
@@ -1438,7 +1436,7 @@ importlib.reload(module)
 
 ### 以脚本方式执行模块
 
-当在控制台直接执行Python脚本文件的时候，模块的`__name__`属性值会被设置为`"__main__"`，可以利用这个特性在模块文件在命令行以`python module.py`直接进行执行的时候，进行一些特定的交互和操作。
+当在控制台直接执行 Python 脚本文件的时候，模块的`__name__`属性值会被设置为`"__main__"`，可以利用这个特性在模块文件在命令行以`python module.py`直接进行执行的时候，进行一些特定的交互和操作。
 
 ```py
 # module.py
@@ -1455,7 +1453,7 @@ if __name__ == "__main__":
 
 ### 模块的搜索的路径
 
-当一个模块名字被引入时，Python解释器会首先搜索内置模块是否存在该名称，如果不存在，则会按照`sys.path`属性的顺序进行搜索。即首先是当前`.py`脚本所在的目录，然后是Python环境变量相关的目录，最后进行Python安装相关的目录。
+当一个模块名字被引入时，Python 解释器会首先搜索内置模块是否存在该名称，如果不存在，则会按照`sys.path`属性的顺序进行搜索。即首先是当前`.py`脚本所在的目录，然后是 Python 环境变量相关的目录，最后进行 Python 安装相关的目录。
 
 ```py
 import sys
@@ -1468,25 +1466,25 @@ print(sys.path)
 
 ### 预编译
 
-为了加快模块的加载速度，Pytho缓存了`__pycache__`目录下每个模块的编译版本至`module.version.pyc`名称下，例如**CPython release 3.6**里的`main.py`模块将会被缓存为`__pycache__/main.cpython-36.pyc`，这样的命名约定可以使不同Python版本的编译模块能够同时共存。
+为了加快模块的加载速度，Pytho 缓存了`__pycache__`目录下每个模块的编译版本至`module.version.pyc`名称下，例如**CPython release 3.6**里的`main.py`模块将会被缓存为`__pycache__/main.cpython-36.pyc`，这样的命名约定可以使不同 Python 版本的编译模块能够同时共存。
 
-Python根据编译版本检查源代码的修改日期，以确定它是否过期，是否需要重新编译。这是一个完全自动的过程。此外，编译后的模块是独立于平台的，因此相同的库可以在具有不同体系结构的系统之间共享。
+Python 根据编译版本检查源代码的修改日期，以确定它是否过期，是否需要重新编译。这是一个完全自动的过程。此外，编译后的模块是独立于平台的，因此相同的库可以在具有不同体系结构的系统之间共享。
 
-Python在两种情况下不检查缓存。首先，它总是重新编译，不存储直接从命令行加载的模块的结果。其次，如果没有源模块，它不会检查缓存。要支持非源(仅编译)发行版，编译后的模块必须位于源目录中，并且不允许有源模块。
+Python 在两种情况下不检查缓存。首先，它总是重新编译，不存储直接从命令行加载的模块的结果。其次，如果没有源模块，它不会检查缓存。要支持非源(仅编译)发行版，编译后的模块必须位于源目录中，并且不允许有源模块。
 
-Python在两种情况下不会检查缓存。首先，从命令行直接加载的模块总是会重新进行编译；其次，如果当前没有源模块时就不会检查缓存。为了支持非源（*仅编译可用*）的发行版，被编译的模块必须位于源目录，并且它们必须不能是一个源模块。
+Python 在两种情况下不会检查缓存。首先，从命令行直接加载的模块总是会重新进行编译；其次，如果当前没有源模块时就不会检查缓存。为了支持非源（_仅编译可用_）的发行版，被编译的模块必须位于源目录，并且它们必须不能是一个源模块。
 
 需要提醒一些资深的使用者：
 
-- 你可以使用`-O`或`-OO`控制Python命令编译模块的尺寸，参数`-O`会移除assert语句，`-OO`会移除assert语句和`__doc__`字符串。由于有些程序可能依赖于这些选项，所以只有在知道自己在做什么时才应该使用这此选项。经过优化的模块会拥有一个`opt-`标识并且通常情况下尺寸会更小。但是未来的Python版本可能会调整这些优化的效果。
+- 你可以使用`-O`或`-OO`控制 Python 命令编译模块的尺寸，参数`-O`会移除 assert 语句，`-OO`会移除 assert 语句和`__doc__`字符串。由于有些程序可能依赖于这些选项，所以只有在知道自己在做什么时才应该使用这此选项。经过优化的模块会拥有一个`opt-`标识并且通常情况下尺寸会更小。但是未来的 Python 版本可能会调整这些优化的效果。
 - 从`.pyc`文件读取的程序并不会比从`.py`文件读取的运行速度更快，`.pyc文件`唯一提高的是加载速度。
 - 模块`compileall`能够为一个目录下的所有模块建立`.pyc`文件。
 
-> Python内置的标准模块，有些是依赖于操作系统底层实现的，例如`winreg`模块只供在Windows系统上使用。但是模块`sys`比较特殊，它可以用于几乎所有平台的Python解释器。
+> Python 内置的标准模块，有些是依赖于操作系统底层实现的，例如`winreg`模块只供在 Windows 系统上使用。但是模块`sys`比较特殊，它可以用于几乎所有平台的 Python 解释器。
 
 ### `dir()`方法
 
-Python内置的`dir()`方法能够以字符串格式输出模块当中所定义的内容。
+Python 内置的`dir()`方法能够以字符串格式输出模块当中所定义的内容。
 
 ```py
 # module.py
@@ -1509,7 +1507,7 @@ main.py里的属性与方法： ['__annotations__', '__builtins__', '__cached__'
 module.py里的属性与方法： ['__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'demo', 'variable']
 ```
 
-可以通过向`dir()`方法传递内置的标准模块`builtins`来获取Python内建的函数和变量。
+可以通过向`dir()`方法传递内置的标准模块`builtins`来获取 Python 内建的函数和变量。
 
 ```py
 import builtins
@@ -1523,7 +1521,7 @@ print(dir(builtins))
 
 ### 包
 
-Python将多个模块的集合称为**包**，包通过带点的模块名来构建Python的命名空间，例如模块名`A.B`表示在`A`包下建立的`B`子模块。
+Python 将多个模块的集合称为**包**，包通过带点的模块名来构建 Python 的命名空间，例如模块名`A.B`表示在`A`包下建立的`B`子模块。
 
 ```py
 # ./directory/module.py
@@ -1557,12 +1555,11 @@ demo()
 __all__ = ["echo", "surround", "reverse"]
 ```
 
-上面意味着`from package import *`将会引入`package`目录下的`echo`、`surround`、`reverse`3个子模块。如果这里的`__all__`属性没有被定义，则`from package import *`语句就不会将子模块引入当前的命名空间，它只会确保`package`包被引入，并且也会执行`__init__.py`中的其它代码，然后引入包内定义的各种名称（*包括由`__init__.py`以及子模块定义的*）。
-
+上面意味着`from package import *`将会引入`package`目录下的`echo`、`surround`、`reverse`3 个子模块。如果这里的`__all__`属性没有被定义，则`from package import *`语句就不会将子模块引入当前的命名空间，它只会确保`package`包被引入，并且也会执行`__init__.py`中的其它代码，然后引入包内定义的各种名称（_包括由`__init__.py`以及子模块定义的_）。
 
 #### 通过相对路径引用包
 
-Python当中，`from...import...`同样可以通过**相对路径**访问包。
+Python 当中，`from...import...`同样可以通过**相对路径**访问包。
 
 ```py
 from . import package
@@ -1570,26 +1567,25 @@ from .. import package
 from ..package import module
 ```
 
-> 注意：相对路径的`import`是基于当前模块名称的，由于主模块名称总是`"__main__"`，所以用于作为Python应用程序的主模块必须始终使用绝对导入。
+> 注意：相对路径的`import`是基于当前模块名称的，由于主模块名称总是`"__main__"`，所以用于作为 Python 应用程序的主模块必须始终使用绝对导入。
 
 #### 处理多个目录中的包
 
-Python中的包支持一个特殊的属性`__path__`，它可以被初始化成一个包含目录名称的列表，这个列表可以在该代码文件执行之前处理包的`__init__.py`。这个变量可以修改的，这样做会影响将来对包中包含的模块和子包的搜索。
+Python 中的包支持一个特殊的属性`__path__`，它可以被初始化成一个包含目录名称的列表，这个列表可以在该代码文件执行之前处理包的`__init__.py`。这个变量可以修改的，这样做会影响将来对包中包含的模块和子包的搜索。
 
 > 虽然通常不需要这个特性，但是可以通过它来扩展包中的模块集合。
 
-
 ## 虚拟环境
 
-虚拟环境（*Virtual Environment*）是一个自包含的目录树，用来管理Python第3方包依赖。不同的Python项目可以使用不同的虚拟环境，例如：应用程序`A`可以安装自己的`1.0`版本的虚拟环境，而应用程序`B`具有另一个`2.0`版本的虚拟环境，如果应用程序`B`需要将依赖库升级至`3.0`版本，这并不会影响应用程序`B`的虚拟环境。
+虚拟环境（_Virtual Environment_）是一个自包含的目录树，用来管理 Python 第 3 方包依赖。不同的 Python 项目可以使用不同的虚拟环境，例如：应用程序`A`可以安装自己的`1.0`版本的虚拟环境，而应用程序`B`具有另一个`2.0`版本的虚拟环境，如果应用程序`B`需要将依赖库升级至`3.0`版本，这并不会影响应用程序`B`的虚拟环境。
 
-Python官方提供了一个虚拟环境的轻量级实现模块[venv](https://docs.python.org/3.6/library/venv.html#module-venv)，较新版本的Python发行包里已经默认内置了其实现，可以直接进行使用。
+Python 官方提供了一个虚拟环境的轻量级实现模块[venv](https://docs.python.org/3.6/library/venv.html#module-venv)，较新版本的 Python 发行包里已经默认内置了其实现，可以直接进行使用。
 
 ```
 python3 -m venv my-project
 ```
 
-上面的语句执行之后，将会建立一个`my-project`目录，里面包含一个Python解释器的拷贝，以及相关的第3方依赖库，在Python3.6.6下执行得到的目录结构如下：
+上面的语句执行之后，将会建立一个`my-project`目录，里面包含一个 Python 解释器的拷贝，以及相关的第 3 方依赖库，在 Python3.6.6 下执行得到的目录结构如下：
 
 ![venv](python/venv.png)
 
@@ -1603,12 +1599,12 @@ my-project\Scripts\activate.bat
 source my-project/bin/activate
 ```
 
-激活后将会改变当前Shell的显示信息，以提示开发人员当前正在使用的是哪个虚拟环境。
+激活后将会改变当前 Shell 的显示信息，以提示开发人员当前正在使用的是哪个虚拟环境。
 
 ```bash
 ➜  /workspace source my-project/bin/activate
 (my-project) ➜  /workspace python
-Python 3.6.6 (default, Sep 12 2018, 18:26:19) 
+Python 3.6.6 (default, Sep 12 2018, 18:26:19)
 [GCC 8.0.1 20180414 (experimental) [trunk revision 259383]] on linux
 Type "help", "copyright", "credits" or "license" for more information.
 >>> import sys
@@ -1616,102 +1612,103 @@ Type "help", "copyright", "credits" or "license" for more information.
 ['', '/usr/lib/python36.zip', '/usr/lib/python3.6', '/usr/lib/python3.6/lib-dynload', '/workspace/my-project/lib/python3.6/site-packages']
 ```
 
-> [virtualenv](https://virtualenv.pypa.io/en/latest/)是一个第3方社区提供的独立Python虚拟环境，同时支持Python2和Python3版本。在Python3.3以后，官方提供了上述的`venv`模块原生支持虚拟环境，因此`virtualenv`逐步废弃使用。
+> [virtualenv](https://virtualenv.pypa.io/en/latest/)是一个第 3 方社区提供的独立 Python 虚拟环境，同时支持 Python2 和 Python3 版本。在 Python3.3 以后，官方提供了上述的`venv`模块原生支持虚拟环境，因此`virtualenv`逐步废弃使用。
 
 ## 包管理
 
-Python可以使用应用程序`pip`安装、升级、移除第三方依赖包，正常情况下`pip`已经伴随Python解释器默认安装。
+Python 可以使用应用程序`pip`安装、升级、移除第三方依赖包，正常情况下`pip`已经伴随 Python 解释器默认安装，如果当前 Python 默认安装的 pip 版本过低，那么可以通过`pip install -U pip`或`python -m pip install --upgrade pip`命令手动进行安装。
 
 ```bash
 # 搜索包
-(my-project) ➜  /workspace pip search djongo
-djongo (1.2.30)  - Driver for allowing Django to use MongoDB as the database backend.
+(my-project) ➜  pip search Django
+django-bagou (0.1.0)              - Django Websocket for Django
+django-maro (0.0.2)               - `django-maro` is utility for django.
+django-ide (0.0.5)                - A Django app to develop Django apps
+django-hooked (0.1.7)             - WebHooks for Django and Django Rest Framework.
+django-six (1.0.4)                - Django-six &#8212;&#8212; Django Compatibility Library
+django-umanage (1.1.1)            - Django user management app for django
+django-mailwhimp (0.1)            - django-mailwhimp integrates mailchimp into Django
+django-jackal (1.6.2)             - Boilerplate for Django and Django REST Framework
+django-nadmin (0.1.0)             - django nadmin support django version 1.8 based on django-xadmin
+django-listings (0.1)             - django-listings
+django-optionsfield (0.2)         - django-optionsfield
+django-user (0.2.1)               - Django User
+django-uuidfield (0.5.0)          - UUIDField in Django
+django-utils (0.0.2)              - Utilities for Django
+... ... ...
 
 # 安装包
-(my-project) ➜  /workspace pip install djongo
-Collecting djongo
-  Downloading https://files.pythonhosted.org/packages/92/07/d4943617a9ac3a331a41717b54db7736ee2106f59f6726efac4f9614ea44/djongo-1.2.30-py3-none-any.whl
-Collecting pymongo>=3.2.0 (from djongo)
-  Downloading https://files.pythonhosted.org/packages/b1/45/5440555b901a8416196fbf2499c4678ef74de8080c007104107a8cfdda20/pymongo-3.7.2-cp36-cp36m-manylinux1_x86_64.whl (408kB)
-    100% |████████████████████████████████| 409kB 406kB/s 
-Collecting dataclasses>=0.1 (from djongo)
-  Downloading https://files.pythonhosted.org/packages/26/2f/1095cdc2868052dd1e64520f7c0d5c8c550ad297e944e641dbf1ffbb9a5d/dataclasses-0.6-py3-none-any.whl
-Collecting django>=2.0 (from djongo)
-  Downloading https://files.pythonhosted.org/packages/32/ab/22530cc1b2114e6067eece94a333d6c749fa1c56a009f0721e51c181ea53/Django-2.1.2-py3-none-any.whl (7.3MB)
-    100% |████████████████████████████████| 7.3MB 141kB/s 
-Collecting sqlparse>=0.2.3 (from djongo)
-  Downloading https://files.pythonhosted.org/packages/65/85/20bdd72f4537cf2c4d5d005368d502b2f464ede22982e724a82c86268eda/sqlparse-0.2.4-py2.py3-none-any.whl
-Collecting pytz (from django>=2.0->djongo)
-  Downloading https://files.pythonhosted.org/packages/52/8b/876c5745f617630be90cfb8fafe363c6d7204b176dc707d1805d1e9a0a35/pytz-2018.6-py2.py3-none-any.whl (507kB)
-    100% |████████████████████████████████| 512kB 678kB/s 
-Installing collected packages: pymongo, dataclasses, pytz, django, sqlparse, djongo
-Successfully installed dataclasses-0.6 django-2.1.2 djongo-1.2.30 pymongo-3.7.2 pytz-2018.6 sqlparse-0.2.4
+(my-project) ➜  pip install Django
+Collecting Django
+  Using cached https://files.pythonhosted.org/packages/fd/9a/0c028ea0fe4f5803dda1a7afabeed958d0c8b79b0fe762ffbf728db3b90d/Django-2.1.4-py3-none-any.whl
+Requirement already satisfied: pytz in d:\software\tech\python\lib\site-packages (from Django) (2018.7)
+Installing collected packages: Django
+Successfully installed Django-2.1.4
 
 # 移除包
-(my-project) ➜  /workspace pip uninstall djongo
-Uninstalling djongo-1.2.30:
-  /workspace/my-project/lib/python3.6/site-packages/djongo-1.2.30.dist-info/INSTALLER
-  /workspace/my-project/lib/python3.6/site-packages/djongo-1.2.30.dist-info/METADATA
-  /workspace/my-project/lib/python3.6/site-packages/djongo-1.2.30.dist-info/RECORD
-  /workspace/my-project/lib/python3.6/site-packages/djongo-1.2.30.dist-info/WHEEL
-  /workspace/my-project/lib/python3.6/site-packages/djongo-1.2.30.dist-info/top_level.txt
-  /workspace/my-project/lib/python3.6/site-packages/djongo/__init__.py
+(my-project) ➜  pip uninstall Django
+Uninstalling Django-2.1.4:
+  Would remove:
+    d:\software\tech\python\lib\site-packages\django-2.1.4.dist-info\*
+    d:\software\tech\python\lib\site-packages\django\*
+    d:\software\tech\python\scripts\django-admin.exe
+    d:\software\tech\python\scripts\django-admin.py
+Proceed (y/n)? y
+  Successfully uninstalled Django-2.1.4
 
 # 安装包的指定版本
-(my-project) ➜  my-project pip install Django==2.1.2
+(my-project) ➜  pip install Django==2.1.2
 Collecting Django==2.1.2
-  Using cached https://files.pythonhosted.org/packages/32/ab/22530cc1b2114e6067eece94a333d6c749fa1c56a009f0721e51c181ea53/Django-2.1.2-py3-none-any.whl
-Requirement already satisfied: pytz in ./lib/python3.6/site-packages (from Django==2.1.2)
+  Downloading https://files.pythonhosted.org/packages/32/ab/22530cc1b2114e6067eece94a333d6c749fa1c56a009f0721e51c181ea53/Django-2.1.2-py3-none-any.whl (7.3MB)
+    100% |████████████████████████████████| 7.3MB 67kB/s
+Requirement already satisfied: pytz in d:\software\tech\python\lib\site-packages (from Django==2.1.2) (2018.7)
 Installing collected packages: Django
 Successfully installed Django-2.1.2
 
 # 升级指定包的版本
-(my-project) ➜  my-project pip install --upgrade djongo
-Collecting djongo
-  Using cached https://files.pythonhosted.org/packages/92/07/d4943617a9ac3a331a41717b54db7736ee2106f59f6726efac4f9614ea44/djongo-1.2.30-py3-none-any.whl
-Requirement already up-to-date: django>=2.0 in ./lib/python3.6/site-packages (from djongo)
-Requirement already up-to-date: pymongo>=3.2.0 in ./lib/python3.6/site-packages (from djongo)
-Requirement already up-to-date: sqlparse>=0.2.3 in ./lib/python3.6/site-packages (from djongo)
-Requirement already up-to-date: dataclasses>=0.1 in ./lib/python3.6/site-packages (from djongo)
-Requirement already up-to-date: pytz in ./lib/python3.6/site-packages (from django>=2.0->djongo)
-Installing collected packages: djongo
-Successfully installed djongo-1.2.30
+(my-project) ➜  pip install --upgrade Django
+Collecting Django
+  Using cached https://files.pythonhosted.org/packages/fd/9a/0c028ea0fe4f5803dda1a7afabeed958d0c8b79b0fe762ffbf728db3b90d/Django-2.1.4-py3-none-any.whl
+Requirement already satisfied, skipping upgrade: pytz in d:\software\tech\python\lib\site-packages (from Django) (2018.7)
+Installing collected packages: Django
+  Found existing installation: Django 2.1.2
+    Uninstalling Django-2.1.2:
+      Successfully uninstalled Django-2.1.2
+Successfully installed Django-2.1.4
 
 # 查看包的指定信息
-(my-project) ➜  my-project pip show djongo
-Name: djongo
-Version: 1.2.30
-Summary: Driver for allowing Django to use MongoDB as the database backend.
-Home-page: https://nesdis.github.io/djongo/
-Author: nesdis
-Author-email: nesdis@gmail.com
+(my-project) ➜  pip show Django
+Name: Django
+Version: 2.1.4
+Summary: A high-level Python Web framework that encourages rapid development and clean, pragmatic design.
+Home-page: https://www.djangoproject.com/
+Author: Django Software Foundation
+Author-email: foundation@djangoproject.com
 License: BSD
-Location: /workspace/my-project/lib/python3.6/site-packages
-Requires: sqlparse, dataclasses, django, pymongo
+Location: d:\software\tech\python\lib\site-packages
+Requires: pytz
+Required-by:
 
 # 展示当前虚拟环境下安装的包
-(my-project) ➜  my-project pip list
-DEPRECATION: The default format will switch to columns in the future. You can use --format=(legacy|columns) (or define a format=(legacy|columns) in your pip.conf under the [list] section) to disable this warning.
-dataclasses (0.6)
-Django (2.1.2)
-djongo (1.2.30)
-pip (9.0.1)
-pkg-resources (0.0.0)
-pymongo (3.7.2)
-pytz (2018.6)
-setuptools (39.0.1)
-sqlparse (0.2.4)
+(my-project) ➜  pip list
+Package    Version
+---------- -------
+Django     2.1.4
+pip        18.1
+pytz       2018.7
+setuptools 39.0.1
+wheel      0.32.3
 ```
 
-`pip freeze`将会生成已安装的包列表，但输出格式使用了`pip install`所期望的格式，通常Python约定将该列表放置到一个`requirements.txt`文件。
+`pip freeze`将会生成已安装的包列表，但输出格式使用了`pip install`所期望的格式，通常 Python 约定将该列表放置到一个`requirements.txt`文件。
 
 ```bash
-(my-project) ➜  my-project pip freeze > requirements.txt
+(my-project) ➜  pip freeze > requirements.txt
 
 # requirements.txt
 dataclasses==0.6
 Django==2.1.2
-djongo==1.2.30
+Django==1.2.30
 pkg-resources==0.0.0
 pymongo==3.7.2
 pytz==2018.6
@@ -1721,24 +1718,23 @@ sqlparse==0.2.4
 然后可以将`requirements.txt`文件伴随应用程序一起提交至版本管理系统当中，然后其它用户可以在同步代码之后使用`pip install -r requirements.txt`安装所需的包。
 
 ```bash
-(my-project) ➜  my-project pip install -r requirements.txt 
+(my-project) ➜  pip install -r requirements.txt
 Requirement already satisfied: dataclasses==0.6 in ./lib/python3.6/site-packages (from -r requirements.txt (line 1))
 Requirement already satisfied: Django==2.1.2 in ./lib/python3.6/site-packages (from -r requirements.txt (line 2))
-Requirement already satisfied: djongo==1.2.30 in ./lib/python3.6/site-packages (from -r requirements.txt (line 3))
+Requirement already satisfied: Django==1.2.30 in ./lib/python3.6/site-packages (from -r requirements.txt (line 3))
 Requirement already satisfied: pkg-resources==0.0.0 in ./lib/python3.6/site-packages (from -r requirements.txt (line 4))
 Requirement already satisfied: pymongo==3.7.2 in ./lib/python3.6/site-packages (from -r requirements.txt (line 5))
 Requirement already satisfied: pytz==2018.6 in ./lib/python3.6/site-packages (from -r requirements.txt (line 6))
 Requirement already satisfied: sqlparse==0.2.4 in ./lib/python3.6/site-packages (from -r requirements.txt (line 7))
 ```
 
-
 ## 输入输出
 
-Python内置了许多方法去完成输入输出操作，这些方法能够将数据以人类可读的形式打印出来，也可以将其写入文件当中供将来使用。
+Python 内置了许多方法去完成输入输出操作，这些方法能够将数据以人类可读的形式打印出来，也可以将其写入文件当中供将来使用。
 
 ### 输出格式化
 
-Python提供了两种字符串格式化输出的方法，一种是使用`format()`函数进行格式化输出，另一种是通过`print()`函数的格式化占位符完成。
+Python 提供了两种字符串格式化输出的方法，一种是使用`format()`函数进行格式化输出，另一种是通过`print()`函数的格式化占位符完成。
 
 ```py
 print("{}是中国的一个{}".format("成都", "省"))
@@ -1762,7 +1758,7 @@ print("%(city)s是中国的一个%(province)s" % {"city": "成都", "province": 
 '''
 ```
 
-Python当中可以使用`str()`和`repr()`方法将任意值转换成为字符串。其中`str()`会返回人类可读的字符串，`repr()`则会生成Python解释器能够读取的格式。
+Python 当中可以使用`str()`和`repr()`方法将任意值转换成为字符串。其中`str()`会返回人类可读的字符串，`repr()`则会生成 Python 解释器能够读取的格式。
 
 ```py
 string = str("Hank\n");
@@ -1780,18 +1776,18 @@ Hank
 
 ### 文件读写
 
-Python当中`open(filename, mode, encoding)`函数会返回一个`file`对象，其中`filename`是需要打开的文件名，`mode`用于标识以何种方式打开文件，`encoding`指定读写操作的编码格式。
+Python 当中`open(filename, mode, encoding)`函数会返回一个`file`对象，其中`filename`是需要打开的文件名，`mode`用于标识以何种方式打开文件，`encoding`指定读写操作的编码格式。
 
-| 模式 | 意义 |
-|:-----|:-----|
-| `"r"` | 以读方式打开（*默认*）。 |
-| `"w"` | 以写方式打开，并清除之前内容。 |
-| `"x"` | 创建文件，如果文件已经存在则操作失败。 |
+| 模式  | 意义                                         |
+| :---- | :------------------------------------------- |
+| `"r"` | 以读方式打开（_默认_）。                     |
+| `"w"` | 以写方式打开，并清除之前内容。               |
+| `"x"` | 创建文件，如果文件已经存在则操作失败。       |
 | `"a"` | 以写方式打开，并在之前内容的尾部追加新内容。 |
-| `"b"` | 二进制模式。 |
-| `"t"` | 文本模式（*默认*）。 |
-| `"+"` | 打开一个磁盘文件进行读写操作。 |
-| `"U"` | 通用换行模式（*已废弃*）。 |
+| `"b"` | 二进制模式。                                 |
+| `"t"` | 文本模式（_默认_）。                         |
+| `"+"` | 打开一个磁盘文件进行读写操作。               |
+| `"U"` | 通用换行模式（_已废弃_）。                   |
 
 使用`file`对象的最佳实践是与`with`关键字结合在一起，从而保证`file`对象总是能在恰当的时间关闭，即使出现异常，使用`with`关键字也比书写等效的`try-finally`简洁，这个在接下来的[对象清理](#对象清理)章节有更详细的讲解。
 
@@ -1863,14 +1859,14 @@ with open("demo.txt", mode = "w", encoding="utf8") as file:
 
 ### 对象清理
 
-Python当中的一些预定义对象会内置清理行为，可以在对象不再需要的时候被自动执行。
+Python 当中的一些预定义对象会内置清理行为，可以在对象不再需要的时候被自动执行。
 
 ```py
 for line in open("myfile.txt"):
     print(line, end="")
 ```
 
-上面这段代码的问题在于，代码执行完后没有立即关闭打开的文件。这在相对简单的脚本代码中不算问题，但对于更大规模的应用而言就是严重的错误。因此，Python提供了`with`语句来确保`file`这样的对象在使用后能够被正确的清理和关闭。
+上面这段代码的问题在于，代码执行完后没有立即关闭打开的文件。这在相对简单的脚本代码中不算问题，但对于更大规模的应用而言就是严重的错误。因此，Python 提供了`with`语句来确保`file`这样的对象在使用后能够被正确的清理和关闭。
 
 ```py
 with open("myfile.txt") as file:
@@ -1880,10 +1876,9 @@ with open("myfile.txt") as file:
 
 上面语句执行之后，即使读取文件数据时出现问题，`file`对象也能正常关闭，因为`file`对象已经预定义了相关清除行为。
 
+## Python 之禅
 
-## Python之禅
-
-可以在Python命令行模式输入`import this`得到一份关于Python的优秀指导原则**《Python之禅》**。
+可以在 Python 命令行模式输入`import this`得到一份关于 Python 的优秀指导原则**《Python 之禅》**。
 
 - 优美胜于丑陋。
 - 明了胜于晦涩。
@@ -1901,9 +1896,9 @@ with open("myfile.txt") as file:
 - 如果实现易于解释，这可能是一个好主意。
 - 命名空间是非常好的主意，要善于进行利用。
 
-### 使用JSON保存结构化数据
+## 通过 JSON 保存数据
 
-JSON可以用来保存诸如嵌套的字典或者列表这样的结构化数据，Python提供了`json`模块来处理JSON格式数据，具体使用方法请参见下面的示例代码：
+JSON 可以用来保存诸如嵌套的字典或者列表这样的结构化数据，Python 提供了`json`模块来处理 JSON 格式数据，具体使用方法请参见下面的示例代码：
 
 ```py
 import json
@@ -1912,7 +1907,7 @@ string = json.dumps([28, "Hank"])
 print(string) # [28, "Hank"]
 ```
 
-也可以在打开文件之后，将文件内容序列化为JSON格式。
+也可以在打开文件之后，将文件内容序列化为 JSON 格式。
 
 ```py
 import json
@@ -1922,8 +1917,33 @@ with open("test.json", mode = "r", encoding="utf8") as file:
   print(string) # {'user': 'Hank', 'age': 33}
 ```
 
+## 通过 XML 方式合成 SVG
 
-## 实践：使用Djongo搭建Web服务
+SVG 本质是基于 XML 语言进行描述的矢量图形，由于 Python 内置的`ElementTree`组件类提供了丰富的操作 XML 树形结构的方法；因此在下面这份简单的示例代码当中，将基于`ElementTree`来完成 SVG 图片文件的合并工作。
 
+```py
+import xml.etree.ElementTree as ET
 
-## 实践：在线图片相似度比较
+ET.register_namespace('uinika', 'https://uinika.github.io')
+
+empty = ET.parse('./materials/empty.svg')  # 加载ElementTree
+
+root = empty.getroot()  # 获取ElementTree的根Element
+
+pants = ET.parse('./materials/pants.svg').findall('./')
+coat = ET.parse('./materials/coat.svg').findall('./')
+hair = ET.parse('./materials/hair.svg').findall('./')
+scarf = ET.parse('./materials/scarf.svg').findall('./')
+face = ET.parse('./materials/face.svg').findall('./')
+bang = ET.parse('./materials/bang.svg').findall('./')
+shoes = ET.parse('./materials/shoes.svg').findall('./')
+
+tree = pants + coat + hair + scarf + face + bang + shoes  # 合并图片组件
+
+for element in tree:
+    root.append(element)  # 向empty的<svg>元素下添加合并后的图片组件
+
+print(ET.dump(root))  # 打印生成树
+
+empty.write('./svg/merge.svg', 'UTF-8')  # 保存生成树
+```
